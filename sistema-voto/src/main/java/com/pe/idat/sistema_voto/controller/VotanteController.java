@@ -23,4 +23,21 @@ public class VotanteController {
     public Votante guardar(@RequestBody Votante votante) {
         return service.guardar(votante);
     }
+    @GetMapping("/{id}")
+    public Votante buscar(@PathVariable Integer id){
+        return service.buscar(id);
+    }
+
+    @PutMapping("/{id}")
+    public Votante actualizar(
+            @PathVariable Integer id,
+            @RequestBody Votante votante){
+
+        return service.actualizar(id, votante);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id){
+        service.eliminar(id);
+    }
 }

@@ -23,4 +23,22 @@ public class CandidatoController {
     public Candidato guardar(@RequestBody Candidato candidato) {
         return service.guardar(candidato);
     }
+
+    @GetMapping("/{id}")
+    public Candidato buscar(@PathVariable Integer id){
+        return service.buscar(id);
+    }
+
+    @PutMapping("/{id}")
+    public Candidato actualizar(
+            @PathVariable Integer id,
+            @RequestBody Candidato candidato){
+
+        return service.actualizar(id, candidato);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id){
+        service.eliminar(id);
+    }
 }

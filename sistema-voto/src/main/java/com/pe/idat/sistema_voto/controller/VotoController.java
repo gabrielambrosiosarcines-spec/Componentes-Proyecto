@@ -23,4 +23,21 @@ public class VotoController {
     public Voto guardar(@RequestBody Voto voto) {
         return service.guardar(voto);
     }
+    @GetMapping("/{id}")
+    public Voto buscar(@PathVariable Integer id){
+        return service.buscar(id);
+    }
+
+    @PutMapping("/{id}")
+    public Voto actualizar(
+            @PathVariable Integer id,
+            @RequestBody Voto voto){
+
+        return service.actualizar(id, voto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id){
+        service.eliminar(id);
+    }
 }

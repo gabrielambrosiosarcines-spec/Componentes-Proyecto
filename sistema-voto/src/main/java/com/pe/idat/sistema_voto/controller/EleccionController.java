@@ -23,4 +23,21 @@ public class EleccionController {
     public Eleccion guardar(@RequestBody Eleccion eleccion) {
         return service.guardar(eleccion);
     }
+    @GetMapping("/{id}")
+    public Eleccion buscar(@PathVariable Integer id){
+        return service.buscar(id);
+    }
+
+    @PutMapping("/{id}")
+    public Eleccion actualizar(
+            @PathVariable Integer id,
+            @RequestBody Eleccion eleccion){
+
+        return service.actualizar(id, eleccion);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id){
+        service.eliminar(id);
+    }
 }

@@ -24,4 +24,27 @@ public class RegistroParticipacionController {
             @RequestBody RegistroParticipacion registro) {
         return service.guardar(registro);
     }
+    @GetMapping("/{id}")
+    public RegistroParticipacion buscar(
+            @PathVariable Integer id){
+
+        return service.buscar(id);
+    }
+
+    @PutMapping("/{id}")
+    public RegistroParticipacion actualizar(
+            @PathVariable Integer id,
+            @RequestBody
+            RegistroParticipacion registro){
+
+        return service.actualizar(id,
+                registro);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(
+            @PathVariable Integer id){
+
+        service.eliminar(id);
+    }
 }

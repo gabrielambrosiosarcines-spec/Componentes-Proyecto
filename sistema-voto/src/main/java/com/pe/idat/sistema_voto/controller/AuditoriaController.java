@@ -24,4 +24,27 @@ public class AuditoriaController {
             @RequestBody Auditoria auditoria) {
         return service.guardar(auditoria);
     }
+    @GetMapping("/{id}")
+    public Auditoria buscar(
+            @PathVariable Integer id){
+
+        return service.buscar(id);
+    }
+
+    @PutMapping("/{id}")
+    public Auditoria actualizar(
+            @PathVariable Integer id,
+            @RequestBody
+            Auditoria auditoria){
+
+        return service.actualizar(
+                id, auditoria);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(
+            @PathVariable Integer id){
+
+        service.eliminar(id);
+    }
 }

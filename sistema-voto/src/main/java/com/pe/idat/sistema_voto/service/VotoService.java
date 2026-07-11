@@ -20,4 +20,30 @@ public class VotoService {
     public Voto guardar(Voto voto) {
         return repository.save(voto);
     }
+    public Voto buscar(Integer id){
+        return repository.findById(id).orElse(null);
+    }
+
+    public Voto actualizar(Integer id,
+                           Voto voto){
+
+        Voto existente =
+                repository.findById(id).orElse(null);
+
+        if(existente != null){
+
+            existente.setEleccion(voto.getEleccion());
+            existente.setCandidato(voto.getCandidato());
+            existente.setFechaRegistro(
+                    voto.getFechaRegistro());
+
+            return repository.save(existente);
+        }
+
+        return null;
+    }
+
+    public void eliminar(Integer id){
+        repository.deleteById(id);
+    }
 }

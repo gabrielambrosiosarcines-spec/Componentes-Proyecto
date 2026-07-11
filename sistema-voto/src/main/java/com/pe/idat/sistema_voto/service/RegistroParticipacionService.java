@@ -20,4 +20,39 @@ public class RegistroParticipacionService {
     public RegistroParticipacion guardar(RegistroParticipacion registro) {
         return repository.save(registro);
     }
+    public RegistroParticipacion buscar(
+            Integer id){
+
+        return repository.findById(id)
+                .orElse(null);
+    }
+
+    public RegistroParticipacion actualizar(
+            Integer id,
+            RegistroParticipacion registro){
+
+        RegistroParticipacion existente =
+                repository.findById(id)
+                        .orElse(null);
+
+        if(existente != null){
+
+            existente.setEleccion(
+                    registro.getEleccion());
+
+            existente.setVotante(
+                    registro.getVotante());
+
+            existente.setFechaVoto(
+                    registro.getFechaVoto());
+
+            return repository.save(existente);
+        }
+
+        return null;
+    }
+
+    public void eliminar(Integer id){
+        repository.deleteById(id);
+    }
 }
