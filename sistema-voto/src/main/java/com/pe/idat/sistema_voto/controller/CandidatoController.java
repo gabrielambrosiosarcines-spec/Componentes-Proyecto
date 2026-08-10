@@ -3,6 +3,10 @@ package com.pe.idat.sistema_voto.controller;
 import com.pe.idat.sistema_voto.entity.Candidato;
 import com.pe.idat.sistema_voto.service.CandidatoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +21,15 @@ public class CandidatoController {
     @GetMapping
     public List<Candidato> listar() {
         return service.listar();
+    }
+
+    // Endpoint aparte, no reemplaza a /candidatos.
+    // Ej: GET /candidatos/paginado?page=0&size=10&sort=nombre,asc
+    @GetMapping("/paginado")
+    public Page<Candidato> listarPaginado(
+            @PageableDefault(size = 10, sort = "idCandidato", direction = Sort.Direction.ASC)
+            Pageable pageable) {
+        return service.listarPaginado(pageable);
     }
 
     @PostMapping

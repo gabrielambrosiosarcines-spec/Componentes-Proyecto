@@ -1,122 +1,132 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { Navigate, Route, Routes } from "react-router-dom";
+
+import Login from "./pages/Login";
+import Inicio from "./pages/Inicio";
+import Usuarios from "./pages/Usuarios";
+import Votantes from "./pages/Votantes";
+import Elecciones from "./pages/Elecciones";
+import Candidatos from "./pages/Candidatos";
+import Votos from "./pages/Votos";
+import Participacion from "./pages/Participacion";
+import Auditoria from "./pages/Auditoria";
+import FormularioUsuario from "./pages/FormularioUsuario";
+import FormularioGenerico from "./pages/FormularioGenerico";
+
+import RutaProtegida from "./components/RutaProtegida";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <Routes>
 
-      <div className="ticks"></div>
+      {/* Ruta pública */}
+      <Route
+        path="/"
+        element={<Navigate to="/login" replace />}
+      />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <Route
+        path="/login"
+        element={<Login />}
+      />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Rutas protegidas */}
+      <Route element={<RutaProtegida />}>
+
+        <Route
+          path="/inicio"
+          element={<Inicio />}
+        />
+
+        <Route
+          path="/usuarios"
+          element={<Usuarios />}
+        />
+
+        <Route
+          path="/usuarios/nuevo"
+          element={<FormularioUsuario />}
+        />
+
+        <Route
+          path="/usuarios/editar/:id"
+          element={<FormularioUsuario />}
+        />
+
+        <Route
+          path="/votantes"
+          element={<Votantes />}
+        />
+
+        <Route
+          path="/votantes/nuevo"
+          element={<FormularioGenerico tipo="votante" />}
+        />
+
+        <Route
+          path="/elecciones"
+          element={<Elecciones />}
+        />
+
+        <Route
+          path="/elecciones/nueva"
+          element={<FormularioGenerico tipo="elección" />}
+        />
+
+        <Route
+          path="/candidatos"
+          element={<Candidatos />}
+        />
+
+        <Route
+          path="/candidatos/nuevo"
+          element={<FormularioGenerico tipo="candidato" />}
+        />
+
+        <Route
+          path="/votos"
+          element={<Votos />}
+        />
+
+        <Route
+          path="/votos/nuevo"
+          element={<FormularioGenerico tipo="voto" />}
+        />
+
+        <Route
+          path="/participacion"
+          element={<Participacion />}
+        />
+
+        <Route
+          path="/participacion/nuevo"
+          element={<FormularioGenerico tipo="registro" />}
+        />
+
+        <Route
+          path="/auditoria"
+          element={<Auditoria />}
+        />
+
+      </Route>
+
+      {/* Cualquier ruta inexistente */}
+      <Route
+        path="*"
+        element={<Navigate to="/login" replace />}
+      />
+
+      <Route
+        path="/votantes/nuevo"
+        element={<FormularioGenerico tipo="votante" />}
+      />
+
+      <Route
+        path="/votantes/editar/:id"
+        element={<FormularioGenerico tipo="votante" />}
+      />
+
+    </Routes>
+  );
 }
 
-export default App
+export default App;

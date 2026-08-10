@@ -1,6 +1,7 @@
 package com.pe.idat.sistema_voto.service;
 
 import com.pe.idat.sistema_voto.entity.Eleccion;
+import com.pe.idat.sistema_voto.exception.RecursoNoEncontradoException;
 import com.pe.idat.sistema_voto.repository.EleccionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,30 +22,29 @@ public class EleccionService {
         return repository.save(eleccion);
     }
     public Eleccion buscar(Integer id){
-        return repository.findById(id).orElse(null);
+        return repository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "Elección " + id + " no encontrada"));
     }
 
     public Eleccion actualizar(Integer id,
                                Eleccion eleccion){
 
-        Eleccion existente =
-                repository.findById(id).orElse(null);
+        Eleccion existente = buscar(id);
 
-        if(existente != null){
+        existente.setTitulo(eleccion.getTitulo());
+        existente.setDescripcion(eleccion.getDescripcion());
+        existente.setFechaInicio(eleccion.getFechaInicio());
+        existente.setFechaFin(eleccion.getFechaFin());
+        existente.setEstado(eleccion.getEstado());
 
-            existente.setTitulo(eleccion.getTitulo());
-            existente.setDescripcion(eleccion.getDescripcion());
-            existente.setFechaInicio(eleccion.getFechaInicio());
-            existente.setFechaFin(eleccion.getFechaFin());
-            existente.setEstado(eleccion.getEstado());
-
-            return repository.save(existente);
-        }
-
-        return null;
+        return repository.save(existente);
     }
 
     public void eliminar(Integer id){
+        if (!repository.existsById(id)) {
+            throw new RecursoNoEncontradoException("Elección " + id + " no encontrada");
+        }
         repository.deleteById(id);
     }
 }

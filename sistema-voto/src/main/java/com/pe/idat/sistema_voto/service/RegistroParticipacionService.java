@@ -1,6 +1,7 @@
 package com.pe.idat.sistema_voto.service;
 
 import com.pe.idat.sistema_voto.entity.RegistroParticipacion;
+import com.pe.idat.sistema_voto.exception.RecursoNoEncontradoException;
 import com.pe.idat.sistema_voto.repository.RegistroParticipacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,35 +25,32 @@ public class RegistroParticipacionService {
             Integer id){
 
         return repository.findById(id)
-                .orElse(null);
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "Registro de participación " + id + " no encontrado"));
     }
 
     public RegistroParticipacion actualizar(
             Integer id,
             RegistroParticipacion registro){
 
-        RegistroParticipacion existente =
-                repository.findById(id)
-                        .orElse(null);
+        RegistroParticipacion existente = buscar(id);
 
-        if(existente != null){
+        existente.setEleccion(
+                registro.getEleccion());
 
-            existente.setEleccion(
-                    registro.getEleccion());
+        existente.setVotante(
+                registro.getVotante());
 
-            existente.setVotante(
-                    registro.getVotante());
+        existente.setFechaVoto(
+                registro.getFechaVoto());
 
-            existente.setFechaVoto(
-                    registro.getFechaVoto());
-
-            return repository.save(existente);
-        }
-
-        return null;
+        return repository.save(existente);
     }
 
     public void eliminar(Integer id){
+        if (!repository.existsById(id)) {
+            throw new RecursoNoEncontradoException("Registro de participación " + id + " no encontrado");
+        }
         repository.deleteById(id);
     }
 }
