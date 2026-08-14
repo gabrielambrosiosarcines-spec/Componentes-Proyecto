@@ -63,12 +63,22 @@ function App() {
         />
 
         <Route
+        path="/votantes/editar/:id"
+        element={<FormularioGenerico tipo="votante" />}
+      />
+
+        <Route
           path="/elecciones"
           element={<Elecciones />}
         />
 
         <Route
           path="/elecciones/nueva"
+          element={<FormularioGenerico tipo="elección" />}
+        />
+
+        <Route
+          path="/elecciones/editar/:id"
           element={<FormularioGenerico tipo="elección" />}
         />
 
@@ -83,12 +93,22 @@ function App() {
         />
 
         <Route
+          path="/candidatos/editar/:id"
+          element={<FormularioGenerico tipo="candidato" />}
+        />
+
+        <Route
           path="/votos"
           element={<Votos />}
         />
 
         <Route
           path="/votos/nuevo"
+          element={<FormularioGenerico tipo="voto" />}
+        />
+
+        <Route
+          path="/votos/editar/:id"
           element={<FormularioGenerico tipo="voto" />}
         />
 
@@ -103,6 +123,11 @@ function App() {
         />
 
         <Route
+          path="/participacion/editar/:id"
+          element={<FormularioGenerico tipo="registro" />}
+        />
+
+        <Route
           path="/auditoria"
           element={<Auditoria />}
         />
@@ -113,16 +138,6 @@ function App() {
       <Route
         path="*"
         element={<Navigate to="/login" replace />}
-      />
-
-      <Route
-        path="/votantes/nuevo"
-        element={<FormularioGenerico tipo="votante" />}
-      />
-
-      <Route
-        path="/votantes/editar/:id"
-        element={<FormularioGenerico tipo="votante" />}
       />
 
     </Routes>
